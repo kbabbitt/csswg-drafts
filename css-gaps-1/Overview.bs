@@ -483,10 +483,20 @@ Pairing gap intersection points into segments</h4>
 	</div>
 
 <h3 id="outset">
-Adjusting gap decoration endpoints: The 'column-rule-outset', 'row-rule-outset', and 'rule-outset' properties</h3>
+Adjusting gap decoration endpoints: The 'rule-outset' properties</h3>
 
 	<pre class='propdef'>
-		Name: column-rule-outset, row-rule-outset
+		Name: column-rule-edge-outset, row-rule-edge-outset
+		Value: <<length-percentage>>
+		Initial: ''0''
+		Applies to: <a>grid containers</a>, <a>flex containers</a>, <a>multicol containers</a>, and <a>masonry containers</a>
+		Inherited: no
+		Percentages: refer to the <a>crossing gap width</a>
+		Animation type: by computed value type
+	</pre>
+
+	<pre class='propdef'>
+		Name: column-rule-interior-outset, row-rule-interior-outset
 		Value: <<length-percentage>>
 		Initial: ''50%''
 		Applies to: <a>grid containers</a>, <a>flex containers</a>, <a>multicol containers</a>, and <a>masonry containers</a>
@@ -497,12 +507,41 @@ Adjusting gap decoration endpoints: The 'column-rule-outset', 'row-rule-outset',
 
 	These properties can be used to offset the endpoints of <a>gap decorations</a> relative to the
 	<a>gap intersection points</a> which would normally determine their endpoints.
+
+	The 'rule-edge-outset' properties control the behavior for [=gap intersection points=]
+	at the content edges of a container.
+	Positive values extend outwards, beyond the container's content bounds,
+	while negative values recede inwards from the content edge.
+
+	The 'rule-interior-outset' properties control the behavior for [=gap intersection points=]
+	that occur where gaps intersect with each other.
+	Positive values extend towards the center of the intersection,
+	while negative values recede away from the intersection.
 	The initial value of ''50%'' places the <a>gap decoration</a> endpoint in the center of the intersection.
 	With a value of ''0'', the <a>gap decoration</a> endpoint will coincide with the edge of the intersection.
-	Positive values extend towards the center of the intersection;
-	negative values recede from it.
-	These offsets also apply at the edges of the container,
-	where positive values may extend beyond the content bounds of the container.
+
+	<pre class='propdef shorthand'>
+		Name: rule-edge-outset
+		Value: <<'column-rule-edge-outset'>>
+		Applies to: Same as 'column-rule-edge-outset' and 'row-rule-edge-outset'
+	</pre>
+
+	Sets the 'column-rule-edge-outset' and 'row-rule-edge-outset' properties to the same value.
+
+	<pre class='propdef shorthand'>
+		Name: rule-interior-outset
+		Value: <<'column-rule-interior-outset'>>
+		Applies to: Same as 'column-rule-interior-outset' and 'row-rule-interior-outset'
+	</pre>
+
+	Sets the 'column-rule-interior-outset' and 'row-rule-interior-outset' properties to the same value.
+
+	<pre class='propdef shorthand'>
+		Name: column-rule-outset, row-rule-outset
+		Value: <<length-percentage>> [ <<length-percentage>> ]?
+		Initial: ''0''
+		Applies to: Same as 'column-rule-edge-outset', 'column-rule-interior-outset', 'row-rule-edge-outset', and 'row-rule-interior-outset'
+	</pre>
 
 	<pre class='propdef shorthand'>
 		Name: rule-outset
@@ -581,19 +620,9 @@ Adjusting gap decoration endpoints: The 'column-rule-outset', 'row-rule-outset',
 	</div>
 
 	When considering the <a>gap intersection points</a> within a given gap,
-	each point is assigned a <dfn>crossing gap width</dfn>, defined as follows:
-	<dl>
-		<dt>
-			At the content edge of the container
-		<dd>
-			The <a>crossing gap width</a> is ''0''.
-
-		<dt>
-			At an intersection with another gap
-		<dd>
-			The <a>crossing gap width</a> is the used value of the 'column-gap' or 'row-gap' property,
-			whichever applies to the intersecting gap.
-	</dl>
+	each point is assigned a <dfn>crossing gap width</dfn>.
+	This value is the used value of the 'column-gap' or 'row-gap' property,
+	whichever applies to the intersecting gap.
 
 	<div algorithm>
 		To <dfn>compute the offset</dfn> for a given <a>gap intersection point</a> |point| within a given |gap|:
